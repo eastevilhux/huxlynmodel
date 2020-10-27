@@ -2,7 +2,7 @@ package com.east.evil.huxlyn.entity
 
 import kotlin.properties.Delegates
 
-class VMData {
+open class VMData {
     var code by Delegates.notNull<Code>();
 
     var requestCode : Int = 0;
