@@ -9,8 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.east.evil.huxlyn.entity.Loading
 import com.east.evil.huxlyn.entity.VMData
 
-abstract class BaseActivity<D : ViewDataBinding, V : EastViewModel<*>>(contentLayoutId: Int) :
-    AppCompatActivity(contentLayoutId) {
+abstract class BaseActivity<D : ViewDataBinding, V : EastViewModel<*>> :
+    AppCompatActivity() {
 
     lateinit var dataBinding: D;
     lateinit var viewModel : V;
