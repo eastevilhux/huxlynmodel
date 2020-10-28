@@ -1,6 +1,7 @@
 package com.east.evil.huxlyn.commons
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.east.evil.huxlyn.entity.Error
 import com.east.evil.huxlyn.entity.Loading
@@ -11,6 +12,10 @@ import com.east.evil.huxlyn.ext.mainThread
 abstract class EastViewModel<D : VMData>(application: Application) : BaseViewModel(application) {
     val vmData = MutableLiveData<D>();
     val loading = MutableLiveData<Loading>();
+
+    companion object{
+        private const val TAG = "EastViewModel=>";
+    }
 
     open fun initModel(){
         var data = initData();
@@ -91,4 +96,5 @@ abstract class EastViewModel<D : VMData>(application: Application) : BaseViewMod
             }
         }
     }
+
 }
