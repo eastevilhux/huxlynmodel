@@ -102,7 +102,7 @@ abstract class EastViewModel<D : VMData>(application: Application) : BaseViewMod
         }
     }
 
-    private fun open(target: Target){
+    fun open(target: Target){
         if(isMainThread()){
             this.target.value = target;
         }else{
@@ -112,7 +112,7 @@ abstract class EastViewModel<D : VMData>(application: Application) : BaseViewMod
         }
     }
 
-    private fun open(cls:Class<*>,isFinish : Boolean = false){
+    fun open(cls:Class<*>,isFinish : Boolean = false){
         var tag = Target.Builder(cls)
             .isFinish(isFinish)
             .builder();
@@ -125,7 +125,7 @@ abstract class EastViewModel<D : VMData>(application: Application) : BaseViewMod
         }
     }
 
-    private fun open(cls:Class<*>,isFinish : Boolean = false,key:String,value:Int){
+    fun open(cls:Class<*>,isFinish : Boolean = false,key:String,value:Int){
         var tag = Target.Builder(cls)
             .isFinish(isFinish)
             .put(key,value)
@@ -133,7 +133,7 @@ abstract class EastViewModel<D : VMData>(application: Application) : BaseViewMod
         open(tag);
     }
 
-    private fun open(cls:Class<*>,isFinish : Boolean = false,key:String,value:String){
+    fun open(cls:Class<*>,isFinish : Boolean = false,key:String,value:String){
         var tag = Target.Builder(cls)
             .isFinish(isFinish)
             .put(key,value)
@@ -141,7 +141,7 @@ abstract class EastViewModel<D : VMData>(application: Application) : BaseViewMod
         open(tag);
     }
 
-    private fun open(cls:Class<*>,isFinish : Boolean = false,key:String,value:Serializable){
+    fun open(cls:Class<*>,isFinish : Boolean = false,key:String,value:Serializable){
         var tag = Target.Builder(cls)
             .isFinish(isFinish)
             .put(key,value)
@@ -149,7 +149,7 @@ abstract class EastViewModel<D : VMData>(application: Application) : BaseViewMod
         open(tag);
     }
 
-    private fun open(cls:Class<*>,isFinish : Boolean = false,key:String,value:Int,strKey:String,strvalue:String){
+    fun open(cls:Class<*>,isFinish : Boolean = false,key:String,value:Int,strKey:String,strvalue:String){
         var tag = Target.Builder(cls)
             .isFinish(isFinish)
             .put(key,value)
