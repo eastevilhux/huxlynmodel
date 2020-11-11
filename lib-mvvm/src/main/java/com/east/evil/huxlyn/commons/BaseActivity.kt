@@ -7,6 +7,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.east.evil.huxlyn.entity.Loading
+import com.east.evil.huxlyn.entity.Target
 import com.east.evil.huxlyn.entity.VMData
 
 abstract class BaseActivity<D : ViewDataBinding, V : EastViewModel<*>> :
@@ -46,6 +47,18 @@ abstract class BaseActivity<D : ViewDataBinding, V : EastViewModel<*>> :
         viewModel.loading.observe(this, Observer {
             showLoading(it);
         })
+
+        viewModel.target.observe(this, Observer {
+            openTarget(it);
+        })
+    }
+
+    open fun openTarget(target:Target){
+        EastRouter.with(this)
+            .target(target.cls!!)
+            .isFinish(target.isFinish)
+            .bundle(target.bundle)
+            .start()
     }
 
     private fun onVmdataChanged(data:VMData){

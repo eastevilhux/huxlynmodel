@@ -8,7 +8,11 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.east.evil.huxlyn.entity.Loading
+import com.east.evil.huxlyn.entity.Target
+import com.east.evil.huxlyn.entity.VMData
 
 abstract class BaseFragment<D : ViewDataBinding,V : EastViewModel<*>> : Fragment() {
     lateinit var viewModel : V;
@@ -29,8 +33,12 @@ abstract class BaseFragment<D : ViewDataBinding,V : EastViewModel<*>> : Fragment
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         Log.d(TAG, "onActivityCreated");
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.d(TAG, "onCreate");
 
         var vp = ViewModelProvider(
             this,
@@ -43,11 +51,63 @@ abstract class BaseFragment<D : ViewDataBinding,V : EastViewModel<*>> : Fragment
         initView()
     }
 
+    open fun initView(){
+        addObserve();
+    }
+
     abstract fun getLayoutRes():Int;
 
     abstract fun getVMClass() : Class<V>;
 
-    open fun initView(){
+    open fun addObserve(){
+        viewModel.vmData.observe(this, Observer {
+            onVmdataChanged(it);
+        })
+
+        viewModel.loading.observe(this, Observer {
+            showLoading(it);
+        })
+
+        viewModel.target.observe(this, Observer {
+            openTarget(it);
+        })
+    }
+
+    open fun openTarget(target: Target){
+        EastRouter.with(requireContext())
+            .target(target.cls!!)
+            .isFinish(target.isFinish)
+            .bundle(target.bundle)
+            .start()
+    }
+
+    private fun onVmdataChanged(data: VMData){
+        when(data.code){
+            VMData.Code.CODE_DEFAULT->vmdataDefault(data);
+            VMData.Code.CODE_SHOW_MSG->showVmDataToast(data);
+            VMData.Code.CODE_SUCCESS->onVmdataSuccess(data);
+            VMData.Code.CODE_ERROR->onVmdataError(data);
+        }
+    }
+
+    open fun vmdataDefault(data:VMData){
 
     }
+
+    open fun showVmDataToast(data: VMData){
+
+    }
+
+    open fun onVmdataSuccess(data: VMData){
+
+    }
+
+    open fun onVmdataError(data : VMData){
+
+    }
+
+    open fun showLoading(loading: Loading){
+
+    }
+
 }

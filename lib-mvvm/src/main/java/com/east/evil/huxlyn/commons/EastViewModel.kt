@@ -1,17 +1,22 @@
 package com.east.evil.huxlyn.commons
 
 import android.app.Application
+import android.app.Service
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.east.evil.huxlyn.entity.Error
 import com.east.evil.huxlyn.entity.Loading
+import com.east.evil.huxlyn.entity.Target
 import com.east.evil.huxlyn.entity.VMData
 import com.east.evil.huxlyn.ext.isMainThread
 import com.east.evil.huxlyn.ext.mainThread
+import java.io.Serializable
 
 abstract class EastViewModel<D : VMData>(application: Application) : BaseViewModel(application) {
     val vmData = MutableLiveData<D>();
     val loading = MutableLiveData<Loading>();
+    val target = MutableLiveData<Target>();
 
     companion object{
         private const val TAG = "EastViewModel=>";
@@ -97,4 +102,59 @@ abstract class EastViewModel<D : VMData>(application: Application) : BaseViewMod
         }
     }
 
+    private fun open(target: Target){
+        if(isMainThread()){
+            this.target.value = target;
+        }else{
+            mainThread {
+                this.target.value = target;
+            }
+        }
+    }
+
+    private fun open(cls:Class<*>,isFinish : Boolean = false){
+        var tag = Target.Builder(cls)
+            .isFinish(isFinish)
+            .builder();
+        if(isMainThread()){
+            target.value = tag;
+        }else{
+            mainThread {
+                target.value = tag;
+            }
+        }
+    }
+
+    private fun open(cls:Class<*>,isFinish : Boolean = false,key:String,value:Int){
+        var tag = Target.Builder(cls)
+            .isFinish(isFinish)
+            .put(key,value)
+            .builder();
+        open(tag);
+    }
+
+    private fun open(cls:Class<*>,isFinish : Boolean = false,key:String,value:String){
+        var tag = Target.Builder(cls)
+            .isFinish(isFinish)
+            .put(key,value)
+            .builder();
+        open(tag);
+    }
+
+    private fun open(cls:Class<*>,isFinish : Boolean = false,key:String,value:Serializable){
+        var tag = Target.Builder(cls)
+            .isFinish(isFinish)
+            .put(key,value)
+            .builder();
+        open(tag);
+    }
+
+    private fun open(cls:Class<*>,isFinish : Boolean = false,key:String,value:Int,strKey:String,strvalue:String){
+        var tag = Target.Builder(cls)
+            .isFinish(isFinish)
+            .put(key,value)
+            .put(strKey,strvalue)
+            .builder();
+        open(tag);
+    }
 }
