@@ -28,6 +28,7 @@ abstract class BaseFragment<D : ViewDataBinding,V : EastViewModel<*>> : Fragment
         savedInstanceState: Bundle?
     ): View? {
         dataBinding = DataBindingUtil.inflate(inflater,getLayoutRes(),container,false);
+        dataBinding.lifecycleOwner = this;
         return dataBinding.root;
     }
 
@@ -47,7 +48,6 @@ abstract class BaseFragment<D : ViewDataBinding,V : EastViewModel<*>> : Fragment
         viewModel = vp.get(getVMClass()!!);
         viewModel.setLifecycleOwner(this);
         lifecycle.addObserver(viewModel);
-        dataBinding.lifecycleOwner = this;
         initView()
     }
 
