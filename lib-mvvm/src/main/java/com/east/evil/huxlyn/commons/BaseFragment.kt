@@ -35,6 +35,7 @@ abstract class BaseFragment<D : ViewDataBinding,V : EastViewModel<*>> : Fragment
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         Log.d(TAG, "onActivityCreated");
+        initView();
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +49,6 @@ abstract class BaseFragment<D : ViewDataBinding,V : EastViewModel<*>> : Fragment
         viewModel = vp.get(getVMClass()!!);
         viewModel.setLifecycleOwner(this);
         lifecycle.addObserver(viewModel);
-        initView()
     }
 
     open fun initView(){
