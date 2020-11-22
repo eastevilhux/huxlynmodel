@@ -49,10 +49,11 @@ abstract class BaseFragment<D : ViewDataBinding,V : EastViewModel<*>> : Fragment
         viewModel = vp.get(getVMClass()!!);
         viewModel.setLifecycleOwner(this);
         lifecycle.addObserver(viewModel);
+        addObserve();
     }
 
     open fun initView(){
-        addObserve();
+
     }
 
     abstract fun getLayoutRes():Int;
