@@ -50,6 +50,7 @@ abstract class BaseFragment<D : ViewDataBinding,V : EastViewModel<*>> : Fragment
         viewModel.setLifecycleOwner(this);
         lifecycle.addObserver(viewModel);
         addObserve();
+        viewModel.initModel();
     }
 
     open fun initView(){
