@@ -1,7 +1,6 @@
 package com.east.evil.huxlyn.commons
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -10,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.east.evil.huxlyn.entity.Loading
 import com.east.evil.huxlyn.entity.Target
 import com.east.evil.huxlyn.entity.VMData
-import com.god.uikit.widget.LoadingDialog
+import com.east.evil.huxlyn.widget.LoadingDialog
 
 abstract class BaseActivity<D : ViewDataBinding, V : EastViewModel<*>> :
     AppCompatActivity() {

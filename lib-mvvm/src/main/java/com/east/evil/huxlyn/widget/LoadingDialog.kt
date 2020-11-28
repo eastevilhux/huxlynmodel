@@ -1,4 +1,4 @@
-package com.god.uikit.widget
+package com.east.evil.huxlyn.widget
 
 import android.app.Dialog
 import android.content.Context
