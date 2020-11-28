@@ -5,7 +5,7 @@ import android.content.Context
 import androidx.databinding.DataBindingUtil
 import com.east.evil.huxlyn.R
 import com.east.evil.huxlyn.databinding.DialogLoadingBinding
-import com.god.uikit.utils.ViewUtil
+import com.east.evil.huxlyn.ext.dip2px
 
 class LoadingDialog(context: Context) : Dialog(context) {
     lateinit var dataBinding : DialogLoadingBinding;
@@ -22,8 +22,8 @@ class LoadingDialog(context: Context) : Dialog(context) {
         val dialogWindow = window
         val lp = dialogWindow!!.attributes
 
-        lp.width = ViewUtil.dip2px(context, 80)
-        lp.height = ViewUtil.dip2px(context, 80)
+        lp.width = 80.dip2px(context)
+        lp.height = 80.dip2px(context)
         //lp.alpha = 0.7f; // 透明度
         //lp.alpha = 0.7f; // 透明度
         dialogWindow!!.attributes = lp
