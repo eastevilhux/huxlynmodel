@@ -4,6 +4,7 @@ open class Loading{
     var message : String? = null;
     var time : Long = 0;
     var type : LoadingType = LoadingType.TYPE_TOAST;
+    var loadingFlag : Boolean = false;
 
     constructor(){
         type = LoadingType.TYPE_TOAST;

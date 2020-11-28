@@ -67,7 +67,11 @@ abstract class BaseFragment<D : ViewDataBinding,V : EastViewModel<*>> : Fragment
         })
 
         viewModel.loading.observe(this, Observer {
-            showLoading(it);
+            if(it.loadingFlag){
+                showLoading(it);
+            }else{
+                dismissLoading(it);
+            }
         })
 
         viewModel.target.observe(this, Observer {
@@ -109,6 +113,10 @@ abstract class BaseFragment<D : ViewDataBinding,V : EastViewModel<*>> : Fragment
     }
 
     open fun showLoading(loading: Loading){
+
+    }
+
+    open fun dismissLoading(loading: Loading){
 
     }
 

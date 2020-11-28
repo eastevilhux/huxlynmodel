@@ -27,10 +27,17 @@ abstract class EastViewModel<D : VMData>(application: Application) : BaseViewMod
         data.code= VMData.Code.CODE_DEFAULT;
         data.requestCode = VMData.REQUEST_CODE_DEFAULT;
         vmData.value = data;
-        var load = setLoadingTheme();
-        load?.let {
-            loading.value = it;
+        if(needLoading()){
+            val load = setLoadingTheme();
+            load?.let {
+                load.loadingFlag = true;
+                loading.value = it;
+            }
         }
+    }
+
+    open fun needLoading() : Boolean{
+        return false;
     }
 
     abstract fun initData() : D;
@@ -88,10 +95,31 @@ abstract class EastViewModel<D : VMData>(application: Application) : BaseViewMod
         setData(data);
     }
 
-    fun loading(){
+    open fun showLoading(){
         var loading = setLoadingTheme();
         loading?:let {
             loading = Loading();
+        }
+        loading!!.loadingFlag = true;
+        if(isMainThread()){
+            this.loading.value = loading;
+        }else{
+            mainThread {
+                this.loading.value = loading;
+            }
+        }
+    }
+
+    open fun dismissLoading(){
+        var loading = this.loading.value;
+        loading?.let {
+            it.loadingFlag = false;
+        }?:let {
+            loading = setLoadingTheme();
+            loading?:let {
+                loading = Loading();
+            }
+            loading!!.loadingFlag = false;
         }
         if(isMainThread()){
             this.loading.value = loading;
@@ -101,6 +129,7 @@ abstract class EastViewModel<D : VMData>(application: Application) : BaseViewMod
             }
         }
     }
+
 
     fun open(target: Target){
         if(isMainThread()){
