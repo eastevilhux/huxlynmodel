@@ -27,17 +27,33 @@ abstract class EastViewModel<D : VMData>(application: Application) : BaseViewMod
         data.code= VMData.Code.CODE_DEFAULT;
         data.requestCode = VMData.REQUEST_CODE_DEFAULT;
         vmData.value = data;
-        if(needLoading()){
-            val load = setLoadingTheme();
-            load?.let {
-                load.loadingFlag = true;
-                loading.value = it;
-            }
+        if(needLoadingOnInit()){
+            loadingOnInit();
         }
     }
 
-    open fun needLoading() : Boolean{
-        return false;
+    /**
+     * 加载时的加载动画效果
+     * create by hux at 2020-11-28 19:12
+     * @author hux
+     * @return
+     */
+    open fun loadingOnInit(){
+        val loading = Loading()
+        loading.loadingFlag = true;
+        loading.type = Loading.LoadingType.TYPE_DIALOG;
+        this.loading.value = loading;
+    }
+
+    /**
+     * 在初始化的时候，是否需要加载动画
+     * create by hux at 2020-11-28 19:12
+     * @author hux
+     * @return
+     *      是否需要加载动画，默认不需要
+     */
+    open fun needLoadingOnInit(): Boolean {
+        return false
     }
 
     abstract fun initData() : D;
@@ -54,17 +70,6 @@ abstract class EastViewModel<D : VMData>(application: Application) : BaseViewMod
                 vmData.value = data;
             }
         }
-    }
-
-    /**
-     * 设置系统的加载样式,每次在显示加载的时候都将通过调用该方法获得一个加载样式进行展示
-     * create by hux at 2020/10/28 0:12
-     * @author hux
-     * @return
-     *      加载样式
-     */
-    open fun setLoadingTheme() : Loading?{
-        return null;
     }
 
     fun error(code:Int = VMData.ERROR_CODE_DEFAULT,msg:String = getString(),
@@ -95,12 +100,13 @@ abstract class EastViewModel<D : VMData>(application: Application) : BaseViewMod
         setData(data);
     }
 
-    open fun showLoading(){
-        var loading = setLoadingTheme();
+    open fun showLoading(loadingType : Loading.LoadingType = Loading.LoadingType.TYPE_DIALOG){
+        var loading = this.loading.value;
         loading?:let {
             loading = Loading();
         }
         loading!!.loadingFlag = true;
+        loading!!.type = loadingType;
         if(isMainThread()){
             this.loading.value = loading;
         }else{
@@ -114,18 +120,12 @@ abstract class EastViewModel<D : VMData>(application: Application) : BaseViewMod
         var loading = this.loading.value;
         loading?.let {
             it.loadingFlag = false;
-        }?:let {
-            loading = setLoadingTheme();
-            loading?:let {
-                loading = Loading();
-            }
-            loading!!.loadingFlag = false;
-        }
-        if(isMainThread()){
-            this.loading.value = loading;
-        }else{
-            mainThread {
+            if(isMainThread()){
                 this.loading.value = loading;
+            }else{
+                mainThread {
+                    this.loading.value = loading;
+                }
             }
         }
     }

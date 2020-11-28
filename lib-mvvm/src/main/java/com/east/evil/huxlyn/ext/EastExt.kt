@@ -20,3 +20,4 @@ fun mainThread(block: () -> Unit) = GlobalScope.launch(Dispatchers.Main) {
 fun createRandomNumber(min: Int = 0, max: Int = 10): Int {
     return ((min + Math.random() * (max)).toInt())
 }
+
