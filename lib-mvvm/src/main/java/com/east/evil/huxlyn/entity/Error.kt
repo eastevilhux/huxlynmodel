@@ -6,8 +6,14 @@ class Error constructor(){
     var type : Int = 0;
 
     constructor(errorCode:Int,errorMsg :String) : this() {
-        this.erroCode = erroCode;
+        this.erroCode = errorCode;
         this.errorMsg = errorMsg;
+    }
+
+    constructor(errorCode:Int,errorMsg :String,type : Int) : this() {
+        this.erroCode = errorCode;
+        this.errorMsg = errorMsg;
+        this.type = type;
     }
 
 }
