@@ -1,6 +1,7 @@
 package com.east.evil.huxlyn.commons
 
 import android.os.Bundle
+import android.view.KeyEvent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -91,6 +92,18 @@ abstract class BaseActivity<D : ViewDataBinding, V : EastViewModel<*>> :
 
     open fun onVmdataError(data : VMData){
 
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            back();
+            return true;
+        }
+        return super.onKeyUp(keyCode, event);
+    }
+
+    open fun back(){
+        finish();
     }
 
     open fun showLoading(loading: Loading){
