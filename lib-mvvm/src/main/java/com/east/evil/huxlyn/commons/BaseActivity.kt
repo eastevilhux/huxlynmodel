@@ -13,7 +13,7 @@ import com.east.evil.huxlyn.entity.VMData
 import com.east.evil.huxlyn.widget.LoadingDialog
 
 abstract class BaseActivity<D : ViewDataBinding, V : EastViewModel<*>> :
-    AppCompatActivity() {
+    AppCompatActivity(){
 
     lateinit var dataBinding: D;
     lateinit var viewModel : V;

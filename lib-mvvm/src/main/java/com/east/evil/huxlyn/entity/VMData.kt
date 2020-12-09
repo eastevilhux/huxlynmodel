@@ -11,6 +11,7 @@ open class VMData {
 
     var error : Error = Error();
 
+    var data : Any? = null;
 
     enum class Code(code : Int){
         CODE_SUCCESS(88),

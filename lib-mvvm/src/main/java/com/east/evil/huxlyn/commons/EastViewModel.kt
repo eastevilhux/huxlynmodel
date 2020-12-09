@@ -92,6 +92,16 @@ abstract class EastViewModel<D : VMData>(application: Application) : BaseViewMod
         setData(data);
     }
 
+    fun success(code:Int = VMData.SUCCESS_CODE_DEFAULT,msg:String = getString(),
+                requestCode:Int = VMData.REQUEST_CODE_DEFAULT,data:Any? = null){
+        var data = vmData.value!!;
+        data.code = VMData.Code.CODE_SUCCESS;
+        data.msg = msg;
+        data.requestCode = requestCode;
+        data.data = data;
+        setData(data);
+    }
+
     fun error(error : Error,requestCode:Int = VMData.REQUEST_CODE_DEFAULT){
         var data = vmData.value!!;
         data.msg = error.errorMsg;
