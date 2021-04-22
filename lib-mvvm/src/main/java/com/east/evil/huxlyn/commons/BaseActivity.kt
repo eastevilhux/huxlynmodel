@@ -128,7 +128,9 @@ abstract class BaseActivity<D : ViewDataBinding, V : EastViewModel<*>> :
                         this.loading!!.setCanceledOnTouchOutside(true);
                     }
                 }
-                this.loading?.show();
+                if(this.loading?.isShowing != true){
+                    this.loading?.show();
+                }
             }
             Loading.LoadingType.TYPE_TOAST->{
                 loadingToast(loading)

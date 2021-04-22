@@ -19,8 +19,6 @@ abstract class BaseFragment<D : ViewDataBinding,V : EastViewModel<*>> : Fragment
     lateinit var viewModel : V;
     lateinit var dataBinding : D;
 
-    private var loading : LoadingDialog? = null;
-
     companion object{
         private const val TAG = "BaseFragment==>";
     }
@@ -70,6 +68,7 @@ abstract class BaseFragment<D : ViewDataBinding,V : EastViewModel<*>> : Fragment
         })
 
         viewModel.loading.observe(this, Observer {
+            Log.d(TAG,"LOADING==>${it.loadingFlag}")
             if(it.loadingFlag){
                 showLoading(it);
             }else{
