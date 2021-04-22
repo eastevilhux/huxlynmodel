@@ -31,6 +31,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
     }
 
     override fun onLifecycleChange(owner: LifecycleOwner?) {
+        Log.d(TAG,"onDestroy")
     }
 
     protected fun <T> bindLifecycle() : AutoDisposeConverter<T> {

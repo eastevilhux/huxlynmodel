@@ -118,10 +118,10 @@ abstract class BaseFragment<D : ViewDataBinding,V : EastViewModel<*>> : Fragment
     open fun showLoading(loading: Loading){
         when(loading.type){
             Loading.LoadingType.TYPE_DIALOG->{
-                this.loading?:let {
-                    this.loading = LoadingDialog(requireContext());
+                val ac = activity;
+                ac?.let {
+                    (it as BaseActivity<*, *>).showLoading(loading);
                 }
-                this.loading?.show();
             }
             Loading.LoadingType.TYPE_TOAST->{
                 loadingToast(loading)
@@ -135,8 +135,9 @@ abstract class BaseFragment<D : ViewDataBinding,V : EastViewModel<*>> : Fragment
     open fun dismissLoading(loading: Loading){
         when(loading.type){
             Loading.LoadingType.TYPE_DIALOG->{
-                this.loading?.let {
-                    it.dismiss();
+                val ac = activity;
+                ac?.let {
+                    (it as BaseActivity<*, *>).dismissLoading(loading);
                 }
             }
             Loading.LoadingType.TYPE_TOAST->{

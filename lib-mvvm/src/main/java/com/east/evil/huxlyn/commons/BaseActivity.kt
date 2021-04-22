@@ -106,11 +106,27 @@ abstract class BaseActivity<D : ViewDataBinding, V : EastViewModel<*>> :
         finish();
     }
 
+    /**
+     * 在加载框显示的时候，是否允许取消
+     * create by Administrator at 2021/4/22 18:29
+     * @author Administrator
+     * @param
+     * @return
+     */
+    open fun allowedCancelWithNotEnding(): Boolean {
+        return false;
+    }
+
+
     open fun showLoading(loading: Loading){
         when(loading.type){
             Loading.LoadingType.TYPE_DIALOG->{
                 this.loading?:let {
                     this.loading = LoadingDialog(this);
+                    if(allowedCancelWithNotEnding()){
+                        this.loading!!.setCancelable(true);
+                        this.loading!!.setCanceledOnTouchOutside(true);
+                    }
                 }
                 this.loading?.show();
             }
