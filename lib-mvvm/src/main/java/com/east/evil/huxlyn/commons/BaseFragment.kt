@@ -132,10 +132,13 @@ abstract class BaseFragment<D : ViewDataBinding,V : EastViewModel<*>> : Fragment
     }
 
     open fun dismissLoading(loading: Loading){
+        Log.d(TAG,"dismissLoading==>")
         when(loading.type){
             Loading.LoadingType.TYPE_DIALOG->{
+                Log.d(TAG,"dismissLoading==>TYPE_DIALOG")
                 val ac = activity;
                 ac?.let {
+                    Log.d(TAG,"dismissLoading==>make baseactivity dismiss loading");
                     (it as BaseActivity<*, *>).dismissLoading(loading);
                 }
             }

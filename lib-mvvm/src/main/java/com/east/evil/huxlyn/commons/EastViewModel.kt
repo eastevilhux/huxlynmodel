@@ -127,14 +127,32 @@ abstract class EastViewModel<D : VMData>(application: Application) : BaseViewMod
     }
 
     open fun dismissLoading(){
+        Log.d(TAG,"dismissLoading==>");
         var loading = this.loading.value;
         loading?.let {
-            it.loadingFlag = false;
+            Log.d(TAG,"dismissLoading==>loading is not null");
+            loading.loadingFlag = false;
             if(isMainThread()){
+                Log.d(TAG,"dismissLoading==>update loading in mainthread");
                 this.loading.value = loading;
             }else{
                 mainThread {
+                    Log.d(TAG,"dismissLoading==>update loading in mainthread");
                     this.loading.value = loading;
+                }
+            }
+        }?:let {
+            Log.d(TAG,"dismissLoading==>loading is null");
+            val l = Loading();
+            l.type = Loading.LoadingType.TYPE_DIALOG;
+            l.loadingFlag = false;
+            if(isMainThread()){
+                Log.d(TAG,"dismissLoading==>update loading in mainthread");
+                this.loading.value = l;
+            }else{
+                mainThread {
+                    Log.d(TAG,"dismissLoading==>update loading in mainthread");
+                    this.loading.value = l;
                 }
             }
         }
