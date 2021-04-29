@@ -22,7 +22,7 @@ import com.east.evil.huxlyn.entity.VMData
  */
 
 abstract class BaseFragment<D : ViewDataBinding,V : EastViewModel<*>> : Fragment() {
-    private lateinit var viewModel : V;
+    lateinit var viewModel : V;
     lateinit var dataBinding : D;
 
 
